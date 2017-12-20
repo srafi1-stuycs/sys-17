@@ -12,11 +12,11 @@ removes the WKP once a connection has been made
 returns the file descriptor for the upstream pipe.
 =========================*/
 int server_setup() {
+    printf("Setting up server\n");
     mkfifo("luigi", 0600);
     int fd = open("luigi", O_RDONLY);
-    char buffer[HANDSHAKE_BUFFER_SIZE];
-    read(fd, buffer, HANDSHAKE_BUFFER_SIZE);
     remove("luigi");
+    printf("Finished setting up\n");
     return fd;
 }
 
@@ -35,6 +35,7 @@ int server_connect(int from_client) {
     printf("Client pipe name: %s\n", buffer);
     int to_client = open(buffer, O_WRONLY);
     write(to_client, buffer, HANDSHAKE_BUFFER_SIZE);
+    read(from_client, buffer, HANDSHAKE_BUFFER_SIZE);
     return to_client;
 }
 
