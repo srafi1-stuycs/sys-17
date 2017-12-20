@@ -24,12 +24,12 @@ int main() {
 void subserver(int from_client) {
     printf("I am the subserver\n");
     int to_client = server_connect(from_client);
-    char buffer[HANDSHAKE_BUFFER_SIZE];
+    char buffer[BUFFER_SIZE];
     while (1) {
         //char buffer[HANDSHAKE_BUFFER_SIZE];
-        read(from_client, buffer, HANDSHAKE_BUFFER_SIZE);
+        read(from_client, buffer, BUFFER_SIZE);
         process(buffer);
-        write(to_client, buffer, HANDSHAKE_BUFFER_SIZE);
+        write(to_client, buffer, BUFFER_SIZE);
     }
 }
 
